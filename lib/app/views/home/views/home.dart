@@ -16,24 +16,29 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FutureBuilder(future: APIHelper.apiHelper.fetchNFT(), builder: (context, snapshot) {
-            if(snapshot.hasError){
-              return Center(child: Text("Error: ${snapshot.error}"),) ;
-            } else if(snapshot.hasData){
-              Result? result = snapshot.data;
-              return ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) {
-                return Card(
-                   child: Text("${result?.name}"),
+          FutureBuilder(
+            future: APIHelper.apiHelper.fetchNFT(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error: ${snapshot.error}"),
                 );
-              },
+              } else if (snapshot.hasData) {
+                Result? result = snapshot.data;
+                return ListView.builder(
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Text("${result?.name}"),
+                    );
+                  },
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },)
+            },
+          )
         ],
       ),
     );
